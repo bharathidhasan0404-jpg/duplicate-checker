@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101326">
+    <title>LeadIQ — Intelligent Lead Analytics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+        <a href="#overview" class="brand">
+            <span class="brand-icon">L</span>
+            <span>Lead<span class="brand-accent">IQ</span><small>INTELLIGENCE PLATFORM</small></span>
+        </a>
+
+        <p class="nav-label">WORKSPACE</p>
+        <nav class="nav-links">
+            <a href="#overview" class="nav-link active"><span>▦</span> Overview</a>
+            <a href="#leads" class="nav-link"><span>◎</span> Lead Management</a>
+            <a href="#analytics" class="nav-link"><span>▥</span> Analytics</a>
+            <a href="#add-lead" class="nav-link"><span>＋</span> Add New Lead</a>
+        </nav>
+
+        <p class="nav-label">TOOLS</p>
+        <nav class="nav-links">
+            <button class="nav-link nav-button" id="sidebarImport"><span>⇧</span> Import CSV</button>
+            <button class="nav-link nav-button" id="sidebarExport"><span>⇩</span> Export Report</button>
+            <button class="nav-link nav-button" id="themeBtn"><span>◐</span> Toggle Theme</button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="online-dot"></div>
+            <div><strong>System Operational</strong><small>Local workspace active</small></div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <button id="menuBtn" class="icon-btn menu-btn" aria-label="Open menu">☰</button>
+            <div class="breadcrumb">Workspace <span>/</span> <strong id="pageLabel">Overview</strong></div>
+            <div class="top-actions">
+                <span class="live-label"><span class="online-dot"></span> LIVE DASHBOARD</span>
+                <button id="topThemeBtn" class="icon-btn" aria-label="Toggle theme">◐</button>
+                <div class="avatar">BI</div>
+            </div>
+        </header>
+
+        <section class="page-section" id="overview">
+            <div class="hero">
+                <div>
+                    <span class="eyebrow">INTELLIGENT LEAD OPERATIONS</span>
+                    <h1>Lead Intelligence <span>Dashboard</span></h1>
+                    <p>Turn raw prospects into actionable opportunities with lead quality scoring and duplicate detection.</p>
+                </div>
+                <button class="btn btn-primary" id="heroAddBtn">＋ Add New Lead</button>
+            </div>
+
+            <div class="stat-grid">
+                <article class="stat-card">
+                    <div class="stat-top"><span>Total Leads</span><span class="stat-icon purple">◎</span></div>
+                    <h2 id="totalLeads">0</h2>
+                    <p class="stat-note">All records in your workspace</p>
+                    <div class="mini-track"><span id="totalTrack"></span></div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-top"><span>High-Quality Leads</span><span class="stat-icon green">↗</span></div>
+                    <h2 id="highLeads">0</h2>
+                    <p class="stat-note"><span class="text-green">Score 70–100</span> · Priority prospects</p>
+                    <div class="mini-track green-track"><span id="highTrack"></span></div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-top"><span>Duplicates Found</span><span class="stat-icon red">⧉</span></div>
+                    <h2 id="duplicateLeads">0</h2>
+                    <p class="stat-note">Matching email or phone</p>
+                    <div class="mini-track red-track"><span id="duplicateTrack"></span></div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-top"><span>Average Lead Score</span><span class="stat-icon blue">✦</span></div>
+                    <h2 id="averageScore">0<span class="small-unit">/100</span></h2>
+                    <p class="stat-note">Rule-based quality analysis</p>
+                    <div class="mini-track blue-track"><span id="averageTrack"></span></div>
+                </article>
+            </div>
+
+            <div class="dashboard-grid">
+                <article class="panel chart-panel" id="analytics">
+                    <div class="panel-heading">
+                        <div><h2>Lead Quality Distribution</h2><p>Quality breakdown across all records</p></div>
+                        <span class="soft-tag">OVERVIEW</span>
+                    </div>
+                    <div class="quality-chart">
+                        <div class="donut" id="qualityDonut"><div class="donut-center"><strong id="donutTotal">0</strong><span>LEADS</span></div></div>
+                        <div class="legend">
+                            <div><span class="legend-dot dot-high"></span><span>High Quality</span><strong id="legendHigh">0</strong></div>
+                            <div><span class="legend-dot dot-medium"></span><span>Medium Quality</span><strong id="legendMedium">0</strong></div>
+                            <div><span class="legend-dot dot-low"></span><span>Low Quality</span><strong id="legendLow">0</strong></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel source-panel">
+                    <div class="panel-heading">
+                        <div><h2>Lead Source Insights</h2><p>Where your prospects originate</p></div>
+                    </div>
+                    <div id="sourceChart" class="source-chart"></div>
+                </article>
+            </div>
+
+            <article class="panel activity-panel">
+                <div class="panel-heading">
+                    <div><h2>Recent Leads</h2><p>Your latest lead records and their current status</p></div>
+                    <a href="#leads" class="text-link">View all leads →</a>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Lead</th><th>Source</th><th>Score</th><th>Quality</th><th>Record Status</th></tr></thead>
+                        <tbody id="recentTable"></tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+
+        <section class="page-section" id="leads">
+            <div class="section-title">
+                <div><span class="eyebrow">PROSPECT DATABASE</span><h1>Lead Management</h1><p>Search, analyze, filter and manage your complete lead database.</p></div>
+                <div class="button-row">
+                    <button class="btn btn-outline" id="exportBtn">⇩ Export CSV</button>
+                    <button class="btn btn-primary" id="tableAddBtn">＋ Add Lead</button>
+                </div>
+            </div>
+
+            <article class="panel">
+                <div class="filter-row">
+                    <div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search name, email, phone..."></div>
+                    <select id="qualityFilter" aria-label="Filter by quality">
+                        <option value="All">All quality levels</option><option value="High">High quality</option><option value="Medium">Medium quality</option><option value="Low">Low quality</option>
+                    </select>
+                    <select id="duplicateFilter" aria-label="Filter duplicates">
+                        <option value="All">All records</option><option value="Duplicate">Duplicates only</option><option value="Unique">Unique only</option>
+                    </select>
+                    <select id="sourceFilter" aria-label="Filter source">
+                        <option value="All">All sources</option><option>Website</option><option>LinkedIn</option><option>Referral</option><option>Advertisement</option><option>Other</option>
+                    </select>
+                </div>
+                <div class="table-meta"><span id="resultsCount">0 records</span><span>Duplicate matching: normalized email and phone</span></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Lead Details</th><th>Source</th><th>Budget</th><th>Score</th><th>Quality</th><th>Duplicate Status</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="leadTable"></tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="emptyState" hidden>
+                    <div class="empty-icon">◎</div><h3>No matching leads</h3><p>Add a new record or change your filters.</p>
+                    <button class="btn btn-primary" id="emptyAddBtn">＋ Create a Lead</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="page-section" id="add-lead">
+            <div class="section-title">
+                <div><span class="eyebrow">PROSPECT INTAKE</span><h1 id="formTitle">Create a New Lead</h1><p>Enter prospect information to evaluate lead quality and check for duplicates.</p></div>
+            </div>
+            <div class="form-layout">
+                <article class="panel form-panel">
+                    <form id="leadForm">
+                        <input type="hidden" id="editId">
+                        <h2>Contact Information</h2>
+                        <div class="form-grid">
+                            <div class="field"><label for="name">Full Name <span>*</span></label><input id="name" required maxlength="100" placeholder="e.g. Arun Kumar"></div>
+                            <div class="field"><label for="email">Email Address <span>*</span></label><input id="email" type="email" required maxlength="150" placeholder="name@company.com"></div>
+                            <div class="field"><label for="phone">Phone Number <span>*</span></label><input id="phone" type="tel" required maxlength="25" placeholder="+91 98765 43210"></div>
+                            <div class="field"><label for="company">Company</label><input id="company" maxlength="100" placeholder="Company or organization"></div>
+                        </div>
+
+                        <div class="form-divider"></div>
+                        <h2>Lead Qualification</h2>
+                        <div class="form-grid">
+                            <div class="field"><label for="source">Lead Source <span>*</span></label><select id="source" required><option>Website</option><option>LinkedIn</option><option>Referral</option><option>Advertisement</option><option>Other</option></select></div>
+                            <div class="field"><label for="budget">Estimated Budget (₹) <span>*</span></label><input id="budget" type="number" min="0" max="1000000000" step="1" required placeholder="50000"></div>
+                            <div class="field"><label for="interest">Interest Level <span>*</span></label><select id="interest" required><option value="High">High — Ready to engage</option><option value="Medium" selected>Medium — Considering options</option><option value="Low">Low — Early stage</option></select></div>
+                            <div class="field"><label for="status">Pipeline Status</label><select id="status"><option>New</option><option>Contacted</option><option>Qualified</option><option>Converted</option><option>Lost</option></select></div>
+                        </div>
+                        <div class="field full-field"><label for="notes">Notes</label><textarea id="notes" rows="3" maxlength="1000" placeholder="Additional context, requirements or follow-up notes..."></textarea></div>
+                        <div class="form-actions"><button type="button" class="btn btn-outline" id="resetFormBtn">Clear Form</button><button type="submit" class="btn btn-primary" id="saveBtn">✦ Analyze & Save Lead</button></div>
+                        <p id="formMessage" class="form-message" role="status"></p>
+                    </form>
+                </article>
+
+                <aside class="panel score-preview">
+                    <span class="eyebrow">LIVE SCORING GUIDE</span>
+                    <h2>Lead Quality Score</h2>
+                    <p>Score preview updates as you enter the qualification details.</p>
+                    <div class="preview-score"><strong id="previewScore">60</strong><span>/100</span></div>
+                    <div class="score-track"><span id="previewBar"></span></div>
+                    <span id="previewQuality" class="quality-pill medium-pill">MEDIUM QUALITY</span>
+                    <div class="score-breakdown">
+                        <div><span>Interest level</span><strong id="interestPoints">25 pts</strong></div>
+                        <div><span>Estimated budget</span><strong id="budgetPoints">20 pts</strong></div>
+                        <div><span>Lead source</span><strong id="sourcePoints">15 pts</strong></div>
+                    </div>
+                    <div class="info-note"><strong>Scoring model</strong><p>Interest: up to 40 points. Budget: up to 30 points. Source: up to 30 points. High ≥70, Medium ≥45, Low below 45.</p></div>
+                    <div class="info-note warning-note"><strong>Duplicate check</strong><p>Existing email or phone matches are flagged automatically before and after saving.</p></div>
+                </aside>
+            </div>
+        </section>
+
+        <footer class="footer"><span>LeadIQ Intelligence Platform</span><span>HTML · CSS · JavaScript · Local browser storage</span></footer>
+    </main>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<input type="file" id="csvInput" accept=".csv,text/csv" hidden>
+<script src="script.js"></script>
+</body>
+</html>
